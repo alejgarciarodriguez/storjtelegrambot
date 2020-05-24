@@ -1,0 +1,16 @@
+{
+  "name": "storj-telegram-bot",
+  "version": "1.0.0",
+  "description": "Simple Telegram bot for consume Storj node info",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.50.0",
+    "puppeteer": "^3.1.0"
+  }
+}

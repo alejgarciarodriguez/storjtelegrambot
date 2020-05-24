@@ -1,0 +1,9 @@
+version: "3"
+services:
+  storjtelegrambot:
+    container_name: storjtelegrambot
+    build:
+      context: .
+    env_file: .env
+    volumes:
+    - .:/app:rw
