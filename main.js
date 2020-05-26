@@ -39,7 +39,7 @@ const status = async () => {
 }
 
 const CronJob = require('cron').CronJob;
-const job = new CronJob('5 * * * * *', async () => {
+const job = new CronJob('0 0 8 * * *', async () => {
     bot.sendMessage(CHAT_ID, `Daily notification :D\nStatus: ${await status()}\nMoney: ${await money()}`);
 }, null, true, 'Europe/Madrid');
 
