@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 
 const token = process.env.TELEGRAM_TOKEN;
 const siteUrl = process.env.STORJ_URL || 'http://localhost:14002';
+const CHAT_ID = process.env.CHAT_ID;
 
 const bot = new TelegramBot(token, {polling: true});
 
@@ -37,6 +38,11 @@ const status = async () => {
     });
 }
 
+const CronJob = require('cron').CronJob;
+const job = new CronJob('5 * * * * *', async () => {
+    bot.sendMessage(CHAT_ID, `Daily notification :D\nStatus: ${await status()}\nMoney: ${await money()}`);
+}, null, true, 'Europe/Madrid');
+
 bot.onText(/\/status/, async (msg) => {
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, await status());
@@ -51,3 +57,5 @@ bot.onText(/\/cristian/, async (msg) => {
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, await cristian());
 });
+
+job.start();
