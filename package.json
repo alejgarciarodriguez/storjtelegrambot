@@ -1,6 +1,10 @@
 {
   "name": "storj-telegram-bot",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alejgarciarodriguez/storjtelegrambot.git"
+  },
   "description": "Simple Telegram bot for consume Storj node info",
   "main": "index.js",
   "scripts": {
@@ -12,6 +16,6 @@
   "dependencies": {
     "cron": "^1.8.2",
     "node-telegram-bot-api": "^0.50.0",
-    "puppeteer": "^3.1.0"
+    "puppeteer": "^3.3.0"
   }
 }
