@@ -15,6 +15,7 @@ const fetch = async (url, func) => {
     await browser.newPage();
     const page = await browser.newPage();
     await page.goto(url);
+    await page.waitFor(1000);
     const data = await page.evaluate(func);
     await browser.close();
     return data;
