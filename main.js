@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const puppeteer = require('puppeteer');
+const fs = require('fs');
 
 const token = process.env.TELEGRAM_TOKEN;
 const siteUrl = process.env.STORJ_URL || 'http://localhost:14002';
@@ -41,7 +42,22 @@ const status = async () => {
 
 const CronJob = require('cron').CronJob;
 const job = new CronJob('0 0 8 * * *', async () => {
-    bot.sendMessage(CHAT_ID, `Daily notification :D\nStatus: ${await status()}\nMoney: ${await money()}`);
+    const status = await status();
+    const currentMoney = await money();
+    let yesterdayMoney;
+    try {
+        yesterdayMoney = require('./data.json')['money'];
+    } catch (err){
+        yesterdayMoney = undefined;
+    }
+    const data = JSON.stringify({"money": currentMoney});
+    fs.writeFile('data.json', data, (err) => {
+        if (err) throw err;
+        console.log('Data written to file');
+    });
+    let todayEarning = undefined !== yesterdayMoney ? currentMoney - yesterdayMoney : 0;
+    const message = `Daily notification :D\nStatus: ${status}\nMoney: ${currentMoney}\nEarning: ${todayEarning.toFixed(2)}`;
+    bot.sendMessage(CHAT_ID, message);
 }, null, true, 'Europe/Madrid');
 
 bot.onText(/\/status/, async (msg) => {
